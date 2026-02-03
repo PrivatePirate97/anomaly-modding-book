@@ -964,8 +964,8 @@ Hint: most attributes are boolean flags and accept 0 or 1 as their value.
 | Attribute | Purpose |
 |-----------|---------|
 | `x`/`y` | x/y position of the UI element relative to its parent UI element, absolute screen position if parent is GUI class instance itself (`self`) |
-| `width` | width of the UI element, how far it expands to the right, if value is <0 the window expands to the left |
-| `height` | height of the UI element, how far it expands downwards, if value is <0 the window expands upwards |
+| `width` | width of the UI element, how far it expands to the right, if value is < 0 the window expands to the left |
+| `height` | height of the UI element, how far it expands downwards, if value is < 0 the window expands upwards |
 | `stretch` | if set to 1 the used texture will be scaled to fit the UI element size |
 | `alignment` | if used and set to "c" the window's reference point for positioning will be to its center instead of the upper left corner |
 
