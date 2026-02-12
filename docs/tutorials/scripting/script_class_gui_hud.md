@@ -417,20 +417,20 @@ You can call them from *utils_ui.script*, see *utils_ui.script* for reference.
 You can use them in your GUI like this:
 
 ```LUA
-self.item_info = utils_ui.UIItemInfo(self, 500)
+self.info_item = utils_ui.UIInfoItem(self, 500)
 ```
 
-In this example an info window for items is created. You pass your GUI instance as the parent of this UI element and a hover pop up delay time in ms. What arguments you
-have to pass in general depends on the UI element you use.
+In this example an info window for items is created. You pass your GUI instance as the parent of this UI element and a hover pop up delay time in ms.
+What arguments you have to pass in general depends on the UI element you use.
 
 ### Control of UI Elements
 
-Once you have created your UI elements you want to control them, change their appearance, change numbers and text, show or hide certain things, make them become alive so to speak.
-Most GUIs have a dynamic nature after all.
+Once you have created your UI elements you want to control them, change their appearance, change numbers and text, show or hide certain things, make
+them become alive so to speak. Most GUIs have a dynamic nature after all.
   
 The following lists provide info about the most important and most frequently used methods to control UI elements. Keep in mind that many UI elements
 can use the same methods, refer to *lua_help.script* for detailed info about which UI elements can use which methods. The methods listed here are
-sorted primarily by purpose but also by UI element type.
+sorted primarily by purpose and secondarily by UI element type.
 
 #### General / Called on GUI Class
 
@@ -745,12 +745,12 @@ CMainMenu:
 
 ## The UI Info XML File
 
-As mentioned in the beginning, a GUI works with a file that describes its UI elements. This information is stored in an XML file and has a tree like
+As mentioned in the beginning, a GUI works with an XML file that describes its UI elements. The information stored in that file has a tree like
 node structure with branches and subbranches. In general every UI element can be described with a number of certain parameters (also called attributes)
 but none of them are mandatory. "Then why use them in the first place?" Well, every time you create a UI element the engine executes a bunch of code to
 read all the stored info, whether or not you actually store any attributes. If instead you decided to set all these attributes in scripts your code would:
 
-1. get bloated with a lot of functions in order to get your GUI look and behave the way you want it to
+1. get bloated with a lot of functions in order to get your GUI to look and behave the way you want it to
 
 2. take longer to build the GUI because it has to execute all that code beside the engine trying to do the exact same thing for you
 
@@ -780,8 +780,8 @@ if the node contains no child nodes:
 </w>
 ```
 
-This works in most cases but there are exceptions to this. If your XML file has a syntax typo the game usually crashes with an error message hinting to
-an error in your file. Let's add some data:
+This works in most cases but there are exceptions to this e.g. when a node stores a texture path. If your XML file has a syntax typo the game usually crashes
+with an error message hinting to an error in your file. Let's add some data:
 
 ```XML
 <w>
@@ -791,11 +791,11 @@ an error in your file. Let's add some data:
 </w>
 ```
 
-The entries `x`, `y`, `width` and `height` are the attributes. Their value is always noted in quotation marks `""`. In this example we describe the size
-and position of a `CUIStatic`, a simple window that displays a texture. `x` and `y` define the position of the upper left corner of the window, `width`
+In this example we describe the size and position of a `CUIStatic`, a simple window that displays a texture. The entries `x`, `y`, `width` and `height`
+are its attributes. Their values are always noted in quotation marks `""`.  `x` and `y` define the position of the upper left corner of the window, `width`
 and `height` tell us that the window expands 300 px to the right and 200 px downwards (in the virtual screen space with dimensions 1024x768). If these
 numbers were negative the window would expand to the upper left direction instead but it's uncommon to do that. As you can see we have defined a texture
-for the window by storing the texture path. This is where the `stretch` attribute comes into play. It controls whether the texture will scale according
+for the window by storing its file path. This is where the `stretch` attribute comes into play. It controls whether the texture will scale according
 to the window dimensions (`stretch="1"`) or keep its own dimensions instead (`stretch="0"`) e.g. 100x200 px.
 
 The info structure shown above can be used in your script as follows:
@@ -840,9 +840,9 @@ The syntax of the UI info path generally follows this pattern: `tag:child_tag:ch
 no node could be found.
 
 Both buttons are children of `self.main` but one button info is enclosed by the `main_wnd` tags while the other is not. This may look a bit confusing
-but this code is actually totally valid. As mentioned before the xml tree structure has absolutely no effect on the UI element hierarchy. It's pure design
-choice where you put which info. Of course it makes sense to resemble the UI element hierarchy in the XML info structure to some degree but that's up to you.
-An info tree structure scheme can look like this:
+but this structure is actually totally valid. As mentioned before the xml tree structure has absolutely no effect on the UI element hierarchy. It's
+pure design choice where you put which info. Of course it makes sense to resemble the UI element hierarchy in the XML info structure to some degree
+but that's up to you. An info tree structure scheme can look like this:
 
 ```XML
 <w>
@@ -886,7 +886,7 @@ It makes no difference as long as you feed the UI element init functions the cor
 
 In one example in the previous chapter the button texture was not stored with a texture file path but with the ID `ui_button_ordinary` instead.
 Why is that? Well, it makes sense to save multiple textures in one .dds file instead of having a single file for every tiny little icon. But how
-do we know which texture is where in the file and how do we access it? That's where texture descriptions files help us out. A texture description
+do we know which texture is where in the file and how do we access it? That's where texture description files help us out. A texture description
 file is an XML file that assigns an ID to each texture and stores information about its size and position. Texture description files are stored in
 *gamedata/configs/ui/textures_descr* and can have any name but it makes sense to give them a name similar to that of the texture file they describe.
 Here is an excerpt of the file *ui_common.xml* that stores the button texture reference used in the example in the previous chapter:
@@ -935,7 +935,7 @@ in a multi texture .dds file, you have to store its ID that is listed in the cor
 These lists contain all XML info attributes for each UI element. Additionally all child nodes with a predefined tag name that are only usable with certain
 UI elements are listed as well. Disclaimer: Despite having researched carefully some lists or info descriptions may be incomplete or incorrect.
 
-Hint: most attributes are boolean flags and accept 0 or 1 as their value.
+Hint: most attributes act as boolean flags and accept 0 or 1 as their value.
 
 #### Commonly Used
 
@@ -1182,15 +1182,16 @@ In this example the trackbar will change the game's time factor on runtime when 
 | `restart` | unused, apparently used to restart the core engine systems |
 | `runtime` | applies new value on UI element interaction |
 
-## Useful Stuff, Tipps and Tricks
+## Useful Stuff, Tips and Tricks
 
-Finally I'd like to share some info about a few small QoL features, useful functions and nice-to-know's that make life a little easier.
+Finally I'd like to share some info about a few small QoL features, useful functions and nice-to-know's that make life a little easier and allow more
+sophisticated GUI behavior.
 
 ### Mouse Specific Functions
 
 **IsCursorOverWindow()**
 
-This is called as a method of a UI element and returns a boolean value:
+This is called as a method of a UI element and returns true if the mouse cursor is hovering over the element:
 
 ```LUA
 local over_wnd = self.wnd:IsCursorOverWindow()
@@ -1203,14 +1204,14 @@ Global functions not tied to GUI classes, can be called as is. This is an exampl
 ```LUA
 local pos = GetCursorPosition() -- because ShowDialog moves mouse cursor to center
 self:ShowDialog()
-SetCursorPosition(pos)
+SetCursorPosition(pos) -- receives a vector2 with x and y coords
 ```
 
 ### Better than game.translate_string
 
 **SetTextST()**
 
-Imagine you have stored your text in an XML file and want to set the text in GUI by using its string ID. Usually to convert a string ID to text
+Imagine you have stored your text in an XML file and want to use it in your GUI by using its string ID. Usually to convert a string ID to text
 would you use:
 
 ```LUA
@@ -1233,7 +1234,7 @@ extra code that handles this check? Well, there is an engine function that does 
 
 ```LUA
 self.ref -- reference window, can also be the GUI instance itself (self)
-self.wnd -- some window you want to position around the cursor within the frame of the reference window
+self.wnd -- some window you want to position around the cursor within the boundaries of the reference window
 
 local window_rect = Frect()
 self.ref:GetAbsoluteRect(window_rect)
@@ -1312,17 +1313,19 @@ local clr = GetARGB(255, 0, 0, 180)
 
 -- getters, pass a D3DCOLOR value
 -- returns a color channel value (range 0 - 255)
-local A = ClrGetA(number)
-local R = ClrGetR(number)
-local G = ClrGetG(number)
-local B = ClrGetB(number)
+local A = ClrGetA(clr) -- returns 255
+local R = ClrGetR(clr) -- returns 0
+local G = ClrGetG(clr) -- returns 0
+local B = ClrGetB(clr) -- returns 180
 
 -- setters, pass a D3DCOLOR value and the value of the color channel you want to change (range 0 - 255)
 -- returns a D3DCOLOR value
-clr = ClrSetA(number, number)
-clr = ClrSetR(number, number)
-clr = ClrSetG(number, number)
-clr = ClrSetB(number, number)
+clr = ClrSetA(clr, 200)
+clr = ClrSetR(clr, 10)
+clr = ClrSetG(clr, 10)
+clr = ClrSetB(clr, 100)
+
+--> new color is (200, 10, 10, 100)
 ```
 
 ### Color Animations
@@ -1349,7 +1352,7 @@ crashes! The number 1000 means that the color animation starts 1000 ms after the
 This is a list of all color animations that exist in the game. All color animations have been tested with the flags `LA_CYCLIC` and
 `LA_TEXTURECOLOR` on a texture with A/R/G/B = 255/255/150/140, a pink shade that's usually not represented in the game to make any color changes
 visible. The appearance descriptions represent the effect visible with these flags. 'slow'/'medium'/'fast' describe the blinking speed. Note that
-some color animations are very similar in appearance.
+some color animations have very similar effects.
 
 | Function | Appearance |
 |----------|------------|
@@ -1403,6 +1406,10 @@ some color animations are very similar in appearance.
 | `zat_a1_phrase_1` | low FPS style slow blinking from full transparent to full opaque, very long pause at full opaque |
 | `zat_a1_phrase_2` | low FPS style slow blinking from full transparent to full opaque, long pause at full opaque |
 
+### utils_xml.script
+
+*utils_xml.script* offers many useful functions for handling UI elements, colors, text, icons, xml, etc. Definitely check it out!
+
 ### Hotkeys for Buttons
 
 It is possible to assign a keybind to a `CUI3tButton` as a hotkey. When pressing the hotkey the button is triggered as if you pressed it using
@@ -1414,15 +1421,13 @@ the mouse. In your UI element info XML file add the following attribute to your 
 </some_btn>
 ```
 
-The assigned key needs to have the pattern `k*`, `*` can be any keybind like `G`,`L` or `1`. You can even assign a secondary hotkey using the
-attribute `accel_ext`. Then in your script add the following line to `OnKeyboard()`:
+The assigned key value needs to have the pattern `k*`, `*` can be any keybind like `G`,`L` or `1`. You can even assign a secondary hotkey using the
+attribute `accel_ext`. Then, in your script add the following line to `OnKeyboard()`:
 
 ```LUA
 function MyGUI:OnKeyboard(key, keyboard_action)
 
 	local res = CUIScriptWnd.OnKeyboard(self, key, keyboard_action) -- catches the key input
-	
-	if res then return end -- safety check to prevent potential crashes e.g. when a certain key press closes your GUI
 	
 	-- your code
 end
