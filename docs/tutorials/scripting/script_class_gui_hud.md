@@ -959,7 +959,7 @@ Hint: most attributes are boolean flags and accept 0 or 1 as their value.
 | Attribute | Purpose |
 |-----------|---------|
 | `heading` | if set to 1 texture rotation is enabled |
-| `heading_angle` | sets the initial rotation angle in radians of the texture |
+| `heading_angle` | sets the initial rotation angle in degrees of the texture |
 | `shader` | stores the shader path `hud\p3d`, use with textures attached to a 3D model |
 | `light_anim` | stores the name of a color animation |
 | `la_cyclic` | if set to 1 the color anim will be played on repeat |
@@ -1350,7 +1350,7 @@ visible. The appearance descriptions represent the effect visible with these fla
 some color animations are very similar in appearance.
 
 | Function | Appearance |
-|----------|---------|
+|----------|------------|
 | `asus_logo_01` | fading from full transparent to full opaque and back, long pause at full opaque, sets color to black |
 | `buy_menu_info` | fading from full transparent to full opaque and back, pause at full opaque, sets color to black |
 | `credits_vis` | slow fading between full transparent to full opaque, short pause at full opaque, sets color to black |
@@ -1429,6 +1429,11 @@ end
 `CUIScriptWnd.OnKeyboard(self,key,keyboard_action)` catches the key input and passes it to the button which has the hotkey assigned if the pressed key
 matches the hotkey. Make sure your button has a registered callback function, otherwise nothing will happen. If the key press was indeed used by the
 engine the function returns `true`.
+
+## Overlaps and Visibility
+
+UI element creation order matters in terms of overlapping. The element that's created last will overlap all other elements. The order in which you set
+visibility states has no influence on that behavior at all.
 
 ## Changing Files on Runtime
 
