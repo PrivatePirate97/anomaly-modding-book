@@ -24,17 +24,16 @@ Graphical user interfaces essential parts of every game. Generally GUIs can be s
 
 2. GUIs that provide the player with essential information such as player health, stamina, ammo etc, but without offering direct interaction
 
-To make the distiction between these two types clear, I am going to refer to type 1 as "GUI" and type 2 as "HUD" throughout this tutorial. Based on this
-distiction, it's clear that GUIs and HUDs have a fundamentally different character/purpose. However, looking at their code it goes to show that GUIs and HUDs
-are very similar. This tutorial provides a brief overview of how to create a basic GUI or HUD and how to handle UI element XML info. Furthermore it provides
-detailed info about the functions commonly used in GUIs.
+To make the distiction between these two types clear, I am going to refer to type 1 as "GUI" and type 2 as "HUD" throughout this tutorial but
+use the term "GUI" synonym for both GUI and HUD if not expressed otherwise. Based on this distiction, it is clear that GUIs and HUDs have a
+fundamentally different character/purpose. However, looking at their code it goes to show that GUIs and HUDs are very similar. This tutorial
+provides a brief overview of how to create a basic GUI or HUD and how to handle UI element XML info. Furthermore it provides detailed info about
+the functions commonly used in GUIs.
 
 ## Code Basics
 
 Apart from a few exceptions, GUIs and HUDs can be created entirely in Lua scripts. However, they work extensively with engine class methods,
 more details about this later.
-
-From now on the term "GUI" will be used synonym for both GUI and HUD if not expressed otherwise.
 
 ### Creating a GUI
 
