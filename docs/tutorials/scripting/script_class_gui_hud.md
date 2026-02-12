@@ -1433,7 +1433,7 @@ engine the function returns `true`.
 ## Overlaps and Visibility
 
 UI element creation order matters in terms of overlapping. The element that's created last will overlap all other elements. The order in which you set
-visibility states has no influence on that behavior at all.
+visibility states using `Show()` has no influence on that behavior at all.
 
 ## Changing Files on Runtime
 
